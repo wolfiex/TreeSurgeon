@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node circle {
+  fill: #999;
+}
+.node text {
+  font: 10px sans-serif;
+}
+.node--internal circle {
+  fill: #555;
+}
+
+.node--internal text {
+  text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+}
+
+.link {
+  fill: none;
+  stroke: #555;
+  stroke-opacity: 0.4;
+  stroke-width: 1.5px;
+}
+
+</style>
+<svg></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+<script src ="d3-ForceEdgeBundling.js"></script>
+<script src="bundle.js"></script>
+
+<script>
+
+
+
+Object.prototype.getKeyByValue = function( value ) {
+    for( var prop in this ) {
+        if( this.hasOwnProperty( prop ) ) {
+             if( this[ prop ] === value )
+                 return prop;
+        }
+    }
+}
+
+nodes =[]
+links =[]
+lnk={}
+lnkparent={}
+treeData=[]
+const dict = arr => Object.assign(...arr.map( ([k, v]) => ({[k]: v}) ));
+
+var divisor = 35;
+
+start(require('electron').remote.dialog.showOpenDialog())
+//start('tree.dot')
+
+
+function start(file){
+d3.text(file, function(data) { window.data=data.split(';');
+window.data.map(d=> {
+ if (d.match(/.*->.*/)) {links.push(d)}else if (d.match(/.*label.*/)){nodes.push(d)}
+})
+links = links.map(d=>[d.match(/(\d+)\s*->/)[1],d.match(/->\s+(\d+)/)[1]])
+nodes = nodes.map(d=>[d.match(/(\d+)\s*\[label/)[1],
+
+      dict(('label = '+d.match(/\d+\s*\[label="(.*)"/)[1]).split('\\n').map(e=> e.split(' = ')))])
+nodes = nodes.map(d=>{d[1].type = d[1].label.split(" <=")[0]; return d })
+nodes.forEach(d=>{lnk[d[0]]=[];lnkparent[d[0]]=[]})
+
+window.nds = new Map(nodes)
+links.forEach(d=>{lnk[d[0]].push(d[1]);lnkparent[d[1]].push(d[0])}) //parents
+
+start = Object.keys(lnk)[d3.max(Object.values(lnk).map((d,i)=>d.length===0?i:-1))]
+
+var flatData = Object.keys(lnkparent).map(d=>{return{'name':d,'parent':lnkparent[d][0]?lnkparent[d][0]:null}})
+
+
+// convert the flat data into a hierarchy
+window.treeData = d3.stratify()
+  .id(function(d) { return d.name; })
+  .parentId(function(d) { return d.parent; })
+  (flatData);
+
+// assign the name to each node
+treeData.each(function(d) {
+    d.name = d.id;
+  });
+
+  window.col = d3.scaleSequential(d3["interpolate" + 'Viridis'])
+            .domain([0, 1])//treeData.height]);
+
+
+window.groups = new Set(nodes.map(d=>d[1].type))
+groups = dict([...groups].map((d,i)=> [d,i/[...groups].length]))
+
+
+
+
+run(treeData)
+})
+
+}
+
+
+var svg = d3.select("svg"),
+    width = window.innerWidth,
+    height = window.innerHeight,
+    g = svg.attr('width',width).attr('height',height).append("g").attr("transform", "translate(" + (width / 2 ) + "," + (height / 2 ) + ")rotate(-90)");
+
+var stratify = d3.stratify()
+    .parentId(function(d) { return d.id.substring(0, d.id.lastIndexOf(".")); });
+
+//var tree = d3.tree()
+  //  .size([2* Math.PI, 00])
+    //.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+
+function run(treedata){
+
+
+  // declares a tree layout and assigns the size
+//  var treemap = d3.tree()
+  //    .size([height, width]);
+
+
+var treemap = d3.tree()
+
+    //.nodeSize(d=>[Math.PI, d[1].samples] )
+    .size([2*Math.PI, 0.5*width])
+    .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+
+  //  assigns the data to a hierarchy using parent-child relationships
+  var nodes = d3.hierarchy(treedata, function(d) {
+      return d.children;
+    });
+
+  // maps the node data to the tree layout
+  global = treemap(nodes);
+  //var root = tree(stratify(data));
+
+
+
+
+
+
+pointRadial=function(x, y) {
+  return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
+}
+var reverse = require('svg-path-reverse').reverse
+
+
+  var link = g.selectAll(".link")
+    .data(global.links())
+    .enter()
+
+    /*.append("path")
+      .attr("class", "link")
+      .attr('id',(d,i)=>i)
+      .attr("d", d3.linkRadial()
+          .angle(function(d) { return d.x; })
+          .radius(function(d) { return d.y; }))*/
+      .append("path")
+            .attr("class", "link")
+            .attr('id',(d,i)=>i+'C')
+            .attr("d",(d,i)=>
+{
+
+var srcw = -0.5*nds.get(links[i][0]).samples/divisor,
+  tarw = 0.5*nds.get(links[i][1]).samples/divisor
+        var x0 = d.source.x,y0 = d.source.y,
+        x1=d.target.x,y1=d.target.y
+
+
+
+var d_theta = Math.atan((nds.get(links[i][0]).samples/divisor)/y0)*10
+//var d_theta2 = Math.atan((nds.get(links[i][1]).samples/divisor)/y0)
+
+
+
+    var p0 = pointRadial(x0, y0),
+      p1 = pointRadial(x0, y0 = (y0 + y1) / 2),
+      p2 = pointRadial(x1, y0),
+      p3 = pointRadial(x1, y1);
+
+        var pm0 = pointRadial(x0, y0),
+          pm1 = pointRadial(x0, y0 = (y0 + y1) / 2),
+          pm2 = pointRadial(x1, y0),
+          pm3 = pointRadial(x1, y1);
+
+    var path =  "M"+(p0[0]+d_theta)+" "+(p0[1])+" C"+(p1[0]+d_theta)+" "+p1[1]+", "+
+                  (p2[0]+d_theta)+" "+p2[1]+", "+(p3[0]+d_theta)+" "+(p3[1])+""
+
+
+
+path3 = //"M"+(pm0[0])+" "+(pm0[1])+
+
+'l'+(p1[0]-pm3[0])+' '+(p1[1]-pm3[1])+ "C"+(pm2[0])+" "+pm2[1]+", "+
+              pm1[0]+" "+pm1[1]+", "+(pm0[0])+" "+(pm0[1])+""
+
+   return path+path3
+
+
+})//.style('fill','red').style('fill-rule','inherit')
+
+//nonzero, evenodd, and inherit.
+
+
+
+
+  var node = g.selectAll(".node")
+    .data(global.descendants())
+
+    .enter().append("g")
+      .attr("class", function(d) { return "node" + (d.children ? " node--internal" : " node--leaf"); })
+      .attr("transform", function(d) { return "translate(" + radialPoint(d.x, d.y) + ")"; })
+      .attr('id',d=>d.data.id)
+
+
+
+  node.append("circle").attr("class",'.circle')
+      .attr("r", d=>.2+nds.get(d.data.id).samples/divisor)
+        .on('click',function(d) { alert( window.nds.get(d.data.id) )})
+      .on('mouseover',function(d) { console.log(d)})
+      .style('fill',d=>window.col(groups[nds.get(d.data.id).type]))
+
+
+
+  node.append("text")
+      .attr("dy", "0.31em")
+      .attr("x", function(d) { return d.x < Math.PI === !d.children ? 6 : -6; })
+      .attr("text-anchor", function(d) { return d.x < Math.PI === !d.children ? "start" : "end"; })
+      .attr("transform", function(d) { return "rotate(" + (d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI + ")"; })
+      //.text(function(d) { return window.nds.get(d.data.id).label });
+};
+
+function radialPoint(x, y) {
+  return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
+}
+
+
+
+function upd(){
+nodes2=[]
+y = document.getElementsByClassName("node")
+console.log(y)
+for (i = 0; i < y.length; i++) {
+  console.log(i)
+  var e = y[i]
+  var a = e.getBoundingClientRect()
+  nodes2.push( {id:e.id,x:a.top+a.height/2,y:a.left+a.width/2} )
+}
+
+
+links =links.map(d=>{return {source:d[0],target:d[1],value:parseFloat(nds.get(d[0]).samples)}})
+console.log(nodes2,links)
+
+edgebundle({nodes:nodes2,links:links})
+
+}
+
+
+window.nlocs = new Map([...document.getElementsByClassName('node')].map(d=>{
+window.r=d
+  bbox = d.getBBox()
+
+  x= bbox.x+bbox.width/2
+  y= bbox.y+bbox.height/2
+  console.log(x,bbox.x,bbox.y)
+  r= d3.select(r).select('circle').attr('r')
+
+
+return [d.id,{x,y,r}]
+}))
+
+
+annotations=links.map(d=>{
+
+n1 = nlocs.get(d[0])
+n2 = nlocs.get(d[1])
+
+return {
+        note: { label: "",
+        title: "" },
+        dy: n2.x-n1.x,
+        dx: n2.y-n1.y,
+        x: n1.x,
+        y: n1.y,
+        type: d3.annotationCalloutCircle,
+        subject: {
+          radius: 0,
+          radiusPadding: 0
+        }
+    }
+
+
+
+
+})
+
+window.makeAnnotations = d3.annotation()
+        .annotations(annotations)
+        .accessors({ x: d => d.x , y: d => d.y})
+
+      g
+        .attr("class", "annotation-encircle")
+        .call(makeAnnotations)
+
+
+
+
+
+</script>
+<button type="button" onclick='d3.select("svg").selectAll("text").remove()'>Remove Labels</button>

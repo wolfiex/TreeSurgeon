@@ -1,0 +1,28 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "Electon test",
+  "main": "main.js",
+  "dependencies": {
+    "d3-svg-annotation": "^2.1.0",
+    "dot-json": "^1.0.3",
+    "electron-reload": "^1.2.2",
+    "svg-path-reverse": "^1.0.0"
+  },
+  "devDependencies": {
+    "electron": "^1.7.5",
+    "electron-packager": "^8.1.0"
+  },
+  "repository": {},
+  "scripts": {
+    "start": "electron main.js",
+    "dev": "electron . --enable-logging",
+    "clean": "rm -rf ./dist",
+    "clean:osx": "mkdir dist&& touch dist/osx && rm -rf ./dist/osx",
+    "pack": "npm run clean && npm run pack:osx",
+    "pack:osx": "npm run clean:osx && electron-packager . \"DOTplot\" --out=dist/osx --platform=darwin --arch=x64 --asar.unpackDir=asar_subdir --version=0.36.2 --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png",
+    "justpack": "electron-packager . \"DOTplot\" --out=dist/osx --platform=darwin --arch=x64 --asar.unpackDir=asar_subdir  --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png --overwrite"
+  },
+  "author": "Daniel Ellis, daniel.ellis.research@gmail.com",
+  "license": "ISC"
+}
