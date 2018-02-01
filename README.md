@@ -4,11 +4,11 @@ npm install
 sudo npm install -g --save electron --unsafe-perm=true --allow-root
 
 
-##RUN WITH
+## RUN WITH
 electron main.js
 
 
-##EDITABLE in force.html
+## EDITABLE in force.html
 
 window.sidetree = false;
 
