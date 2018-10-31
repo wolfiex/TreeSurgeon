@@ -17,8 +17,8 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
     const myLocation = 'file://' + __dirname
     mainWindow = new BrowserWindow({width:840, height: 1120,resizable: false,title:'Dan Ellis 2016' ,
-    show:true});
-    mainWindow.openDevTools();    // and load the index.html of the app.
+    show:false});
+    //mainWindow.openDevTools();    // and load the index.html of the app.
     mainWindow.loadURL( myLocation + '/index.html');
 
     mainWindow.on('closed', function() { mainWindow = null;  app.quit();});

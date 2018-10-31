@@ -1,0 +1,9 @@
+window.groupcolours ={
+  "Temperature":"#123",
+  "Depth":"red",
+  "ChlrA":"green",
+  "Salinity":"purple",
+  "Temp":"#ccc"
+
+
+}

@@ -46,7 +46,7 @@ function doarcs() {
       counter += s["%"] / 100;
       svg
         .append("path")
-        .style("fill", color(s.feature))
+        .style("fill", window.groupcolours[s.feature])
         .attr("d", arc)
         .attr("transform", "translate(" + q.x + "," + q.fy + ")")
         .on("mouseover", function() {
@@ -70,7 +70,7 @@ function doarcs() {
 function drawlinks(depth) {
   id = 0;
   var id2 = 0;
-  d3.range(0, depth - 1).forEach(dh => {
+  d3.range(0, depth - 2).forEach(dh => {
     var values = Math.pow(2, dh);
 
     d3.range(0, values).forEach(e => {
@@ -100,7 +100,7 @@ function drawlinks(depth) {
             nx: dict[id2]["x"],
             x: dict[id]["x"],
             y: dict[id]["y"],
-            color: color(q["feature"]),
+            color: window.groupcolours[q["feature"]],
             type: d3.annotationCustomType(d3.annotationCallout, {//Elbow
               className: "custom",
               connector: { type: "elbow" },
@@ -138,7 +138,7 @@ dict[id].data.forEach(q => {
     nx: dict[id]["x"],
     x: dict[id]["x"],
     y: dict[id]["y"],
-    color: color(q["feature"]),
+    color: window.groupcolours[q["feature"]],
     type: d3.annotationCustomType(d3.annotationCalloutElbow, {
       className: "custom",
       connector: { type: "line" },
@@ -225,7 +225,7 @@ svg.select(".legendSizeLine")
   [...document.getElementsByClassName("cell")].forEach((d,i)=>{
   //console.log(d,newh);
   if (g[i]===undefined){d.remove()}
-  d.setAttribute('fill',color(g[i]))
+  d.setAttribute('fill',window.groupcolours[g[i]])
 }
 )
 
@@ -262,4 +262,75 @@ doc.end();
 
 console.log('savedindocs')
 
+}
+
+
+
+function savepdf() {
+
+  var fs = require('fs'),
+      PDFDocument = require('pdfkit'),
+      SVGtoPDF = require('svg-to-pdfkit');
+
+  var doc = new PDFDocument(),
+      stream = fs.createWriteStream('./pdfs/'+filename+'.pdf'),
+      svg = document.getElementById('svg').innerHTML;
+
+  PDFDocument.prototype.addSVG = function (svg, x, y, options) {
+    return SVGtoPDF(this, svg, 0, 0, {width:width,height:height,precision:5,preserveAspectRatio:'1:1'}), this;
+  };
+  doc.addSVG('<svg xmlns="https://www.w3.org/TR/2016/CR-SVG2-20160915/" xmlns:xlink="https://www.w3.org/TR/xlink11/" >' + svg + '</svg>', 0, 0);
+
+  //VGtoPDF(doc, '<svg xmlns="https://www.w3.org/TR/2016/CR-SVG2-20160915/" xmlns:xlink="https://www.w3.org/TR/xlink11/" >'+ svg+'</svg>',0,0)
+  stream.on('finish', function () {
+    console.log(fs.readFileSync('./pdfs/'+filename+'.pdf'));
+
+    console.log('savedindocs');
+
+
+//////
+
+window.bg.attr('fill','none');
+        var doc = new PDFDocument(),
+            stream = fs.createWriteStream('./pdfs/'+filename+'_white.pdf'),
+            svg = document.getElementById('svg').innerHTML;
+
+        PDFDocument.prototype.addSVG = function (svg, x, y, options) {
+          return SVGtoPDF(this, svg, 0, 0, {width:width,height:height,precision:5,preserveAspectRatio:'1:1'}), this;
+        };
+        doc.addSVG('<svg xmlns="https://www.w3.org/TR/2016/CR-SVG2-20160915/" xmlns:xlink="https://www.w3.org/TR/xlink11/" >' + svg + '</svg>', 0, 0);
+
+        //VGtoPDF(doc, '<svg xmlns="https://www.w3.org/TR/2016/CR-SVG2-20160915/" xmlns:xlink="https://www.w3.org/TR/xlink11/" >'+ svg+'</svg>',0,0)
+        stream.on('finish', function () {
+          console.log(fs.readFileSync('./pdfs/'+filename+'_white.pdf'));
+
+          console.log('savedindocs');
+
+          var remote = require('electron').remote
+          remote.getCurrentWindow().close();
+        });
+
+        doc.pipe(stream);
+        doc.end();
+
+
+
+
+//////
+
+
+
+
+
+
+
+
+
+    //remote.getCurrentWindow().close();
+  });
+
+  doc.pipe(stream);
+  doc.end();
+
+  console.log('endfile');
 }

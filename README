@@ -1,0 +1,19 @@
+# Running
+Place files in csv folder.
+
+
+`python start.py $NCPUS`
+
+This then runs in the background (no screen). To change edit 'show' option in main.js
+
+
+# Set colours
+see colours.json file
+
+#output
+This is in the pdf folder.
+
+
+#install
+conda install nodejs
+npm install

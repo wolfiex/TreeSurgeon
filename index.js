@@ -1,8 +1,15 @@
+var remote = require('electron').remote
+var fs = require('fs')
+var args =remote.process.argv;
+var filename = args[2].split('.')[0]
+console.log(filename)
+
 const globule = require("globule");
 //cannot load d3 through require!!!
 window.color = d3.scaleOrdinal(d3.schemeCategory20);
 
-var files = globule.find(["./csv/*5.csv"]);
+//var files = globule.find(["./csv/*.csv"]);
+var files = [filename+'.csv']
 console.log(files);
 
 var pause = 30;//seconds between changes
@@ -24,19 +31,12 @@ var svg = d3.select("svg"),
     );
 
 svg.attr("transform", "matrix(1,0,0," + 0.95 + ",0,0)");
-svg.append('rect')
+window.bg =svg.append('rect')
   .attr("width", width)
   .attr("height", height)
   .attr('fill','#222')
 
 //.style("background-color", "#222");
-/*
-d3
-  .queue(2)
-  .defer(d3.csv, f)
-  .awaitAll(ready);
-*/
-
 
 
 var q  = d3.queue(files.length)
@@ -61,6 +61,8 @@ function multiple (err,w){
 
 ///////////
 function ready(text,filename) {
+  window.filename = window.filename.split('/')
+  window.filename = window.filename[window.filename.length - 1]
   window.text = [];
   window.groups = [];
   window.annotations = [];
@@ -92,14 +94,14 @@ legend();
 
 
   var id = 0;
-  d3.range(0, depth).forEach(dh => {
+  d3.range(0, depth-1).forEach(dh => {
     var values = Math.pow(2, dh);
     var x = width / (values + 1);
     var y =
       height *
       Math.pow(
         (height - height / (parseInt(depth) + 1) * (dh + 1)) / height,
-        Math.E * 0.7
+        Math.E *0.9
       );
     d3.range(0, values).forEach(e => {
       //console.log(id,dict[id],y)
