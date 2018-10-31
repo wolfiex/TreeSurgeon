@@ -1,0 +1,66 @@
+--- At depth 000:
+   # of trees     feature      %       std     median       mean  depth  \
+0         500  WOA_TEMP_K  100.0  1.954505  17.417398  17.363121      0   
+
+   node #  # samples (mean)  # samples (median)  
+0       0           643.098               643.0  
+--- At depth 001:
+   # of trees      feature     %        std     median       mean  depth  \
+0         367  Depth_GEBCO  73.4  37.653446 -36.500000 -64.205722      1   
+1         114  WOA_Nitrate  22.8   1.308917   7.959020   7.779380      1   
+2          19   WOA_TEMP_K   3.8   0.221114  14.450769  14.478956      1   
+
+   node #  # samples (mean)  # samples (median)  
+0       1        385.736842               393.0  
+1       1        385.736842               393.0  
+2       1        385.736842               393.0  
+--- At depth 002:
+   # of trees      feature     %          std       median         mean  \
+0         285   WOA_TEMP_K  57.0     1.499560    22.993555    22.528351   
+1         121  Depth_GEBCO  24.2  1855.681320 -2017.000000 -2145.669421   
+2          94  WOA_Nitrate  18.8     1.961765     5.922043     4.631070   
+
+   depth  node #  # samples (mean)  # samples (median)  
+0      1       2        302.648936               307.0  
+1      1       2        302.648936               307.0  
+2      1       2        302.648936               307.0  
+--- At depth 003:
+   # of trees      feature     %          std      median        mean  depth  \
+0         208  WOA_Nitrate  41.6     2.554918    7.708664    7.698639      2   
+1         163  Depth_GEBCO  32.6  1443.078787 -103.000000 -702.000000      2   
+2         129   WOA_TEMP_K  25.8     4.018977    8.957208   10.788774      2   
+
+   node #  # samples (mean)  # samples (median)  
+0       3        212.395349               208.0  
+1       3        212.395349               208.0  
+2       3        212.395349               208.0  
+--- At depth 004:
+   # of trees      feature     %         std     median        mean  depth  \
+0         258   WOA_TEMP_K  51.6    3.565211   4.404749    4.545204      2   
+1         202  WOA_Nitrate  40.4    4.777777   1.066966    4.037582      2   
+2          40  Depth_GEBCO   8.0  752.274189 -63.000000 -584.387500      2   
+
+   node #  # samples (mean)  # samples (median)  
+0       4            128.45               135.5  
+1       4            128.45               135.5  
+2       4            128.45               135.5  
+--- At depth 005:
+   # of trees      feature     %          std       median         mean  \
+0         180   WOA_TEMP_K  36.0     1.767884    21.290094    22.060272   
+1         169  WOA_Nitrate  33.8     1.809880     5.891585     4.933934   
+2         151  Depth_GEBCO  30.2  1218.996250 -1591.000000 -1454.956954   
+
+   depth  node #  # samples (mean)  # samples (median)  
+0      2       5             142.0               138.0  
+1      2       5             142.0               138.0  
+2      2       5             142.0               138.0  
+--- At depth 006:
+   # of trees      feature     %          std      median         mean  depth  \
+0         242  Depth_GEBCO  48.4  2180.279208 -796.500000 -2177.628099      2   
+1         130  WOA_Nitrate  26.0     2.212992    2.399458     2.695870      2   
+2         128   WOA_TEMP_K  25.6     3.332486   24.678430    23.331461      2   
+
+   node #  # samples (mean)  # samples (median)  
+0       6         133.28125               171.0  
+1       6         133.28125               171.0  
+2       6         133.28125               171.0  
