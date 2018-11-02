@@ -1,9 +1,12 @@
 window.groupcolours ={
-  "Temperature":"#123",
-  "Depth":"red",
-  "ChlrA":"green",
-  "Salinity":"purple",
-  "Temp":"#ccc"
-
-
+  "Temperature":"#377eb8",
+  "Depth":"#ff7f00",
+  "ChlrA":"#4daf4a",
+  "Salinity":"#f781bf",
+  "Nitrate":"#a65628",
+  "MLDpt":"#984ea3",
+  "SWrad":"#999999",
+  "Phosphate":"#e41a1c", 
 }
+
+    
