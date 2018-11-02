@@ -9,11 +9,11 @@ except:
 
 
 def run(f):
-    print 'starting ',f
+    print( 'starting ', f )
     os.system('npm start %s'%f.replace('(','\(').replace(')','\)'))
-    print 'ending ',f
+    print( 'ending ', f )
 
 
 mp.Pool(nproc).map(run,filter(lambda x: 'ALL' not in x,glob.glob('csv/*.csv')))
 
-print 'done'
+print( 'done' )
