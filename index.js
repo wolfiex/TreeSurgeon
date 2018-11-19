@@ -90,7 +90,7 @@ d3.select('svg').selectAll('.annotations').remove()
     window.dict[w].data = sortmid(window.dict[w].data,true);
   });
 
-legend();
+///legend();
 
 
   var id = 0;
