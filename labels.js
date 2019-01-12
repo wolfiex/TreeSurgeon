@@ -90,7 +90,7 @@ function drawlinks(depth) {
           var w = wd/2+ count;
           count += wd
           //if (i===0){wd=dict[id]["r"]*.7 * 0.8}
-          window.edgeproperties.push({ width: wd,depth:q.depth, w: w,shift:shift,b:c, name: q["feature"] });
+          window.edgeproperties.push({ width: wd,depth:q.depth, w: w,shift:shift,b:c, name: q["feature"] , feature: q["feature"],to:id2, split: q['median']});
           window.annotations.push({
             note: {
               label: "",
@@ -123,7 +123,7 @@ function drawlinks(depth) {
 /// trunk
 ///
 id = 0
-var count = -dict[id]["r"] *2* 0.2;
+var count = -dict[id]["r"] *2* 0.4;
 dict[id].data.forEach(q => {
   var wd = dict[id]["r"]* 2* 0.4 * (parseFloat(q["%"]) / 100);
   var w = wd + count;
@@ -290,7 +290,9 @@ function savepdf() {
 
 //////
 
-window.bg.attr('fill','none');
+window.bg.attr('fill','whitesmoke');
+d3.selectAll('circle').attr('fill','whitesmoke')
+
         var doc = new PDFDocument(),
             stream = fs.createWriteStream('./pdfs/'+filename+'_white.pdf'),
             svg = document.getElementById('svg').innerHTML;
@@ -317,13 +319,6 @@ window.bg.attr('fill','none');
 
 
 //////
-
-
-
-
-
-
-
 
 
     //remote.getCurrentWindow().close();

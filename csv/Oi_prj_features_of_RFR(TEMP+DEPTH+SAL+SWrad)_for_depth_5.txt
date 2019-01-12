@@ -1,0 +1,50 @@
+--- At depth 000:
+   # of trees     feature      %       std     median       mean  depth  \
+0         500  WOA_TEMP_K  100.0  1.121745  21.121484  20.547307      0   
+
+   node #  # samples (mean)  # samples (median)  
+0       0           659.532               659.0  
+--- At depth 001:
+   # of trees      feature     %        std     median       mean  depth  \
+0         381  Depth_GEBCO  76.2  27.712460 -35.000000 -50.355643      1   
+1         119   WOA_TEMP_K  23.8   0.673947  14.460168  14.332768      1   
+
+   node #  # samples (mean)  # samples (median)  
+0       1        413.084034               415.0  
+1       1        413.084034               415.0  
+--- At depth 002:
+   # of trees       feature     %          std      median        mean  depth  \
+0         400   Depth_GEBCO  80.0  1617.253162  -25.500000 -892.823750      1   
+1          64    WOA_TEMP_K  12.8     1.212048   22.918008   22.586823      1   
+2          20  WOA_Salinity   4.0     0.439126   35.694237   35.953881      1   
+3          16         SWrad   3.2    10.840206  301.133850  297.709480      1   
+
+   node #  # samples (mean)  # samples (median)  
+0       2          261.1875               260.0  
+1       2          261.1875               260.0  
+2       2          261.1875               260.0  
+3       2          261.1875               260.0  
+--- At depth 003:
+   # of trees       feature     %        std      median        mean  depth  \
+0         303    WOA_TEMP_K  60.6   1.599605   14.935510   14.612507      2   
+1         129   Depth_GEBCO  25.8  10.049900 -100.000000 -101.085271      2   
+2          47         SWrad   9.4   1.339878  292.482117  292.467784      2   
+3          21  WOA_Salinity   4.2   0.901385   33.724949   34.238586      2   
+
+   node #  # samples (mean)  # samples (median)  
+0       3        253.095238               259.0  
+1       3        253.095238               259.0  
+2       3        253.095238               259.0  
+3       3        253.095238               259.0  
+--- At depth 004:
+   # of trees       feature     %         std      median        mean  depth  \
+0         300    WOA_TEMP_K  60.0    1.186806    4.404749    4.337059      2   
+1         157   Depth_GEBCO  31.4  851.632329 -520.500000 -744.621019      2   
+2          36  WOA_Salinity   7.2    2.475647   32.513100   32.070277      2   
+3           7         SWrad   1.4   43.853668  188.573288  196.078304      2   
+
+   node #  # samples (mean)  # samples (median)  
+0       4         58.714286                45.0  
+1       4         58.714286                45.0  
+2       4         58.714286                45.0  
+3       4         58.714286                45.0  
