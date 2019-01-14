@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<style>
+div,text{font-family: 'Montserrat', sans-serif;
+color:white;}
+svg{background-fill: 'whitesmoke'}
+ </style>
+
+<svg id='svg'></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src='colours.json'></script>
+<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
+
+<script>
+
+  var remote = require('electron').remote
+  var args = remote.process.argv;
+  var filename = args[2] // .split('.')[0]
+  console.log(filename)
+
+  var maxdepth = 5
+  var width = window.innerWidth
+  var height = window.innerHeight;
+
+  var nodes = []
+  var links = []
+  lnk = {};
+  lnkparent = {};
+  levelarr = []
+  const dict = arr => Object.assign(...arr.map(([k, v]) => ({
+    [k]: v
+  })));
+
+  d3.text(filename, function(data) {
+    window.data = data.split(";");
+    window.data.map(d => {
+      if (d.match(/.*->.*/)) {
+        links.push(d);
+      } else if (d.match(/.*label.*/)) {
+        nodes.push(d);
+      }
+    });
+    links = links.map(d => [
+      d.match(/(\d+)\s*->/)[1],
+      d.match(/->\s+(\d+)/)[1]
+    ]);
+    nodes = nodes.map(d => [
+      d.match(/(\d+)\s*\[label/)[1],
+
+      dict(
+        ("label = " + d.match(/\d+\s*\[label="(.*)"/)[1])
+        .split("\\n")
+        .map(e => e.split(" = "))
+      )
+    ]);
+
+
+    nodes = nodes.map(d => {
+      d[1].type = d[1].label.split(" <=")[0];
+      return d;
+    });
+    nodes.forEach(d => {
+      lnk[d[0]] = [];
+      lnkparent[d[0]] = [];
+    });
+
+    links.forEach(d => {
+      lnk[d[0]].push(d[1]);
+      lnkparent[d[1]].push(d[0]);
+    }); //parents
+
+
+    window.nodes = new Map(nodes)
+
+
+
+
+    numnodes = d3.max([...nodes.keys()].map(d => parseInt(d)))
+
+    d3.range(0, maxdepth).forEach(depth => {
+      depth = maxdepth - depth -1
+      console.log(depth)
+      count = Math.pow(2, depth)
+      d3.range(count, count+count).forEach((q,i) =>
+        levelarr.push(['' + q, {
+          depth: depth,
+          parent: parseInt(q / 2),
+          kx:(1 * width/(depth+2))*(i+1),
+          ky:1*
+          Math.pow(((height/(maxdepth+1)*(depth))),1)
+
+        }]))
+    })
+    levelarr = new Map(levelarr);
+
+
+
+
+    //////////////
+
+    var svg = d3.select("svg")
+    g = svg
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+
+
+    window.graph = [];
+
+
+    total = parseInt(nodes.get('0').samples);
+
+    [...nodes.keys()].forEach(n => {
+
+      d = {}
+      try {
+        m = nodes.get(n)
+        d['percent'] = parseFloat(m.samples)/ total
+      //  d['x'] = d['kx'] = levelarr.get(n).kx
+      //  d['y'] = d['fy'] = levelarr.get(n).ky
+      //  d['parent'] = levelarr.get(n).parent
+        d['id'] = n
+      //  d['fx'] = null
+      //  d['depth']=  levelarr.get(n).depth
+        d['feature'] = m.type
+        d['value'] = parseFloat(m.value)
+
+
+
+        if (d['percent']) {
+          window.graph.push([n,d])
+        }
+      } catch (e) {
+        //console.log(e,n,m)
+     }
+
+
+
+    })
+
+
+window.graph = new Map(window.graph)
+
+    console.log(graph, total)
+/*
+
+
+
+    window.simulation = d3
+      .forceSimulation()
+      .force(
+        "link",
+        d3.forceLink().id(function(d) {
+          return d.id;
+        })
+      )
+      //.force("charge", d3.forceManyBody().strength(d => d.r * -11))
+      .force("posn", d3.forceX(d => d.kx).strength(2))
+    //.force('collision', d3.forceCollide().radius(d=> 2*d.r))
+    //.force("center", d3.forceCenter(width / 2, height / 2));
+
+    node = svg
+      .append("g")
+      .attr("class", "nodes")
+      .selectAll("circle")
+      .data(graph)
+      .enter()
+      .append("circle")
+      .attr("r", d => {var i = Math.sqrt(d.percent)*100 ; return (i)?i:1})
+
+      .on("mouseover", d => console.log(d));
+
+    simulation.nodes(graph).on("tick", ticked);
+
+    function ticked() {
+      if (simulation.alpha() < 0.7) {
+        console.log("stop");
+        simulation.stop();
+
+              //drawlinks(depth);
+
+              graph.forEach(s=>{
+
+
+        if (s.depth<3){
+          console.log(s)
+                 svg.append("text")
+                    .attr('fill',window.groupcolours[s.feature])
+                     .attr("x", parseFloat(s.x))
+                     .attr("y", parseFloat(s.y))
+                     .attr("dy",".35em")
+                     .style("text-anchor", "middle")
+                     .style('font-size',s.r/2.2+'px')
+                     .text('< '+d3.format('02d')(s.value));
+
+        } else {
+
+          svg.append("text")
+             .attr('fill','red')
+              .attr("x", parseFloat(s.x))
+              .attr("y", parseFloat(s.y))
+              .attr("dy",".35em")
+              .style("text-anchor", "middle")
+              .style('font-size',s.r/2.2+'px')
+              .text('--');
+
+        }
+              })
+
+              //console.log('opreee',filename.split('.'))
+              //savepdf(filename);
+
+
+      }
+      node
+        .attr("cx", function(d) {
+          //console.log(d)
+          return d.x;
+        })
+        .attr("cy", function(d) {
+          return d.y;
+        });
+    }
+*/
+    ///////////
+
+
+
+
+
+    window.nds = new Map(nodes);
+    links.forEach(d => {
+      lnk[d[0]].push(d[1]);
+      lnkparent[d[1]].push(d[0]);
+    }); //parents
+
+    start = Object.keys(lnk)[
+      d3.max(Object.values(lnk).map((d, i) => (d.length === 0 ? i : -1)))
+    ];
+
+    window.flatData = Object.keys(lnkparent).map(d => {
+      return {
+        name: d,
+        parent: lnkparent[d][0] ? lnkparent[d][0] : null
+      };
+    });
+
+    // convert the flat data into a hierarchy
+    window.treeData = d3
+      .stratify()
+      .id(function(d) {
+        return d.name;
+      })
+      .parentId(function(d) {
+        return d.parent;
+      })(flatData);
+
+    // assign the name to each node
+    treeData.each(function(d) {
+      d.name = d.id;
+    });
+
+    /*window.col = d3
+      .scaleSequential(d3["interpolate" + "Viridis"])
+      .domain([0, 1]); //treeData.height]);
+*/
+
+
+
+
+    var treemap = d3.tree().size([0.9*width,.9*height]);
+    //  assigns the data to a hierarchy using parent-child relationships
+    window.nn = d3.hierarchy(treeData, function(d) {
+      if (d.depth<window.maxdepth-1){
+      return d.children;
+    }
+    });
+    // maps the node data to the tree layout
+    window.gt = treemap(nn); //.decendants());
+
+    window.treedepth = new Map(
+      gt.descendants().map(d => {
+        return [d.data.id, d.depth];
+      })
+    );
+
+
+
+
+////
+/*
+
+    // adds the links between the nodes
+    var link = svg.selectAll(".link")
+        .data( gt.descendants().slice(1))
+      .enter().append("path")
+        .attr("class", "link")
+        .attr("d", function(d) {
+           return "M" + d.x + "," + d.y
+             + "C" + d.x + "," + (d.y + d.parent.y) / 2
+             + " " + d.parent.x + "," +  (d.y + d.parent.y) / 2
+             + " " + d.parent.x + "," + d.parent.y;
+           });
+*/
+    // adds each node as a group
+
+
+    var node = svg.selectAll(".node")
+        .data(gt.descendants())
+      .enter().append("g")
+        .attr("class", function(d) {
+          return "node" +
+            (d.children ? " node--internal" : " node--leaf"); })
+
+        //.attr("transform", function(d) {
+          //return "translate(" + (d.x+0.05*width) + "," + (d.y+0.05*height) + ")"; })
+
+          .on('mouseover',d=> {console.log(d,d.data)})
+
+    // adds the circle to the node
+    node.append("circle")
+      .attr("r",  d => {var i = Math.sqrt(graph.get(d.data.name).percent)*40 ; return (i)?i:0})
+      .attr('id',d=> d.data.id)
+      .attr('stroke',d=> window.groupcolours[graph.get(d.data.id).feature])
+      .attr('stroke-width',1)
+      .attr('cx',d=> (d.x+0.05*width))
+      .attr('cy',d=> 0.05*height +height *
+      Math.pow(
+        (maxdepth - treedepth.get(''+d.data.id))/(maxdepth+.5)
+        ,
+        Math.E
+      )
+)
+      //(d.y+0.05*height))
+
+
+window.c = new Map([...document.querySelectorAll('circle')].map(d=>[d.id,d]));
+
+exists = [...c.keys()];
+
+window.annotations = links.map(d => {
+  n1 = d[0];
+  n2 = d[1];
+if (exists.indexOf(n1)> -1 & exists.indexOf(n2)>-1){
+
+  return {
+    note: {
+      label: "",
+      title: ""
+    },
+    id: n2,
+    dx: parseFloat(c.get(n2).getAttribute('cx')) - parseFloat(c.get(n1).getAttribute('cx')),
+    dy: parseFloat(c.get(n2).getAttribute('cy')) - parseFloat(c.get(n1).getAttribute('cy'))+0*parseFloat(c.get(n2).getAttribute('r')),
+    x: parseFloat(c.get(n1).getAttribute('cx')) ,
+    y: parseFloat(c.get(n1).getAttribute('cy')) ,
+    type: d3.annotationCalloutCircle,
+    subject: {
+      radius: parseFloat(c.get(n1).getAttribute('r')) ,
+      radiusPadding: 0
+    },
+    color:window.groupcolours[graph.get(n2).feature],
+    ccolor:window.groupcolours[graph.get(n1).feature],
+
+  };
+}
+}).filter(d=>d);
+
+annotations.push({
+  note: {
+    label: "",
+    title: ""
+  },
+  id: '0',
+  dx: 0,
+  dy: 2.5*parseFloat(c.get('0').getAttribute('r')) ,
+  x: parseFloat(c.get('0').getAttribute('cx')) ,
+  y: parseFloat(c.get('0').getAttribute('cy')) ,
+  type: d3.annotationCalloutCircle,
+  subject: {
+    radius: parseFloat(c.get('0').getAttribute('r')) ,
+    radiusPadding: 0
+  },
+  color:window.groupcolours[graph.get('0').feature],
+  ccolor:window.groupcolours[graph.get('0').feature]
+
+})
+
+
+
+
+
+
+
+
+
+window.makeAnnotations = d3
+  .annotation()
+  .annotations(annotations)
+  .accessors({
+    x: d => d.x,
+    y: d => d.y
+  });
+
+d3.select('svg').append("g").attr("class", "annotation-encircle").call(makeAnnotations);
+
+[...document.querySelectorAll('g.annotation.callout.circle')]
+.map((d,i)=>{d.setAttribute('stroke-width',c.get(annotations[i].id).getAttribute('r')/1.6);
+});
+[...document.querySelectorAll('g.annotation.callout.circle g.annotation-subject path.subject')]
+.map((d,i)=>{d.setAttribute('stroke', annotations[i].ccolor);
+});
+
+
+d3.selectAll('.subject').raise().each(function() {
+this.parentNode.appendChild(this);
+});
+
+;
+
+
+
+node.each(function() {
+  console.log(this.querySelector('circle')
+)
+this.parentNode.appendChild(this);
+
+t = this.querySelector('circle')
+
+svg
+.append("text")
+   .attr('fill',window.groupcolours[graph.get(t.getAttribute('id')).feature])
+    .attr("x", parseFloat(t.getAttribute('cx')))
+    .attr("y", parseFloat(t.getAttribute('cy')))
+    .attr("dy",".35em")
+    .style("text-anchor", "middle")
+    .style('font-size',t.getAttribute('r')/2.2+'px')
+    .text('>'+ d3.format('02d')(nds.get(t.getAttribute('id')).label.split('<=')[1]));
+
+}).attr('fill','whitesmoke')
+
+
+setTimeout(function(){savepdf(filename);},1000)
+
+
+  //label in reverse
+
+
+
+  })
+
+
+
+
+
+  function savepdf() {
+
+    var fs = require('fs'),
+        PDFDocument = require('pdfkit'),
+        SVGtoPDF = require('svg-to-pdfkit');
+
+
+
+          var doc = new PDFDocument(),
+              stream = fs.createWriteStream('./pdfs/'+filename+'_single.pdf'),
+              svg = document.getElementById('svg').innerHTML;
+
+          PDFDocument.prototype.addSVG = function (svg, x, y, options) {
+            return SVGtoPDF(this, svg, 0, 0, {width:width,height:height,precision:5,preserveAspectRatio:'1:1'}), this;
+          };
+          doc.addSVG('<svg xmlns="https://www.w3.org/TR/2016/CR-SVG2-20160915/" xmlns:xlink="https://www.w3.org/TR/xlink11/" >' + svg + '</svg>', 0, 0);
+
+          //VGtoPDF(doc, '<svg xmlns="https://www.w3.org/TR/2016/CR-SVG2-20160915/" xmlns:xlink="https://www.w3.org/TR/xlink11/" >'+ svg+'</svg>',0,0)
+          stream.on('finish', function () {
+            console.log(fs.readFileSync('./pdfs/'+filename+'_single.pdf'));
+
+            console.log('savedindocs');
+
+            var remote = require('electron').remote
+            remote.getCurrentWindow().close();
+
+    });
+
+            doc.pipe(stream);
+            doc.end();
+
+    console.log('endfile');
+  }
+</script>
