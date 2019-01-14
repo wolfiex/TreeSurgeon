@@ -199,7 +199,7 @@ if (s.depth<3){
              .attr("dy",".35em")
              .style("text-anchor", "middle")
              .style('font-size',s.r/2.2+'px')
-             .text('< '+format(s.max.split));
+             .text('> '+format(s.max.split));
 
 } else {
 
