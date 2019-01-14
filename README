@@ -1,11 +1,10 @@
 # Running
 Place files in csv folder.
 
-
-`python start.py $NCPUS`
+`python start.py $NCPUS` -for composite files
+`python start.py $NCPUS 1 ` -for single dot files
 
 This then runs in the background (no screen). To change edit 'show' option in main.js
-
 
 # Set colours
 see colours.json file
@@ -13,7 +12,10 @@ see colours.json file
 #output
 This is in the pdf folder.
 
-
 #install
 conda install nodejs
 npm install
+
+
+#Montage setup
+python montage.py

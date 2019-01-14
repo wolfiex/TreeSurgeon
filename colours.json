@@ -1,12 +1,14 @@
 window.groupcolours ={
   "Temperature":"#377eb8",
+  "WOA_TEMP_K":"#377eb8",
   "Depth":"#ff7f00",
+  "Depth_GEBCO":"#ff7f00",
   "ChlrA":"#4daf4a",
   "Salinity":"#f781bf",
+  "WOA_Salinity":"#f781bf",
   "Nitrate":"#a65628",
+  "WOA_Nitrate":"#a65628",
   "MLDpt":"#984ea3",
   "SWrad":"#999999",
-  "Phosphate":"#e41a1c", 
+  "Phosphate":"#e41a1c",
 }
-
-    

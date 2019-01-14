@@ -17,6 +17,7 @@
   "repository": {},
   "scripts": {
     "start": "electron main.js",
+    "single": "electron single.js",
     "dev": "electron . --enable-logging",
     "clean": "rm -rf ./dist",
     "clean:osx": "rm -rf ./dist/osx",

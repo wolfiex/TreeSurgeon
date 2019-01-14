@@ -290,7 +290,7 @@ function savepdf() {
 
 //////
 
-window.bg.attr('fill','whitesmoke');
+window.bg.attr('fill','none');
 d3.selectAll('circle').attr('fill','whitesmoke')
 
         var doc = new PDFDocument(),
