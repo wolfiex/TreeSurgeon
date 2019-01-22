@@ -1,4 +1,4 @@
-import glob, os,sys
+import glob, os,sys,time
 import multiprocessing as mp
 
 try:
@@ -10,10 +10,12 @@ except:
 
 def run(f):
     print( 'starting ', f )
+    time.sleep(2)
     os.system('npm start %s'%f.replace('(','\(').replace(')','\)'))
     print( 'ending ', f )
 
 def single(f):
+    time.sleep(2)
     print( 'starting ', f )
     os.system('electron single.js %s'%f.replace('(','\(').replace(')','\)'))
     print( 'ending ', f )
@@ -21,7 +23,7 @@ def single(f):
 try:
     sys.argv[2]
     print( 'single runs')
-    mp.Pool(nproc).map(single,filter(lambda x: 'ALL' not in x,glob.glob('dot_files/*.dot')))
+    mp.Pool(nproc).map(single,filter(lambda x: 'ALL' not in x,glob.glob('dot_files/*(TEMP+DEPTH+SAL)*.dot')))
 
 except:
     print( 'composite runs' )
