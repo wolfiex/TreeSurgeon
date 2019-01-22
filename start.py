@@ -4,7 +4,7 @@ import multiprocessing as mp
 try:
     nproc = int(sys.argv[1])
 except:
-    print 'failed, did you specify the n of processors'
+    print( 'failed, did you specify the n of processors')
     sys.exit()
 
 
@@ -20,11 +20,11 @@ def single(f):
 
 try:
     sys.argv[2]
-    print 'single runs'
+    print( 'single runs')
     mp.Pool(nproc).map(single,filter(lambda x: 'ALL' not in x,glob.glob('dot_files/*.dot')))
 
 except:
-    print 'composite runs'
+    print( 'composite runs' )
     mp.Pool(nproc).map(run,filter(lambda x: 'ALL' not in x,glob.glob('csv/*.csv')))
 
 print( 'done' )
