@@ -1,8 +1,3 @@
-# installing
-conda install node
-npm install
-
-
 # Running
 Place files in csv folder.
 
@@ -14,13 +9,13 @@ This then runs in the background (no screen). To change edit 'show' option in ma
 # Set colours
 see colours.json file
 
-#output
+# Output
 This is in the pdf folder.
 
-#install
+# Install
 conda install nodejs
 npm install
 
 
-#Montage setup
+# Montage setup
 python montage.py
