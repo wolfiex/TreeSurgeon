@@ -15,7 +15,7 @@ console.log(files);
 var pause = 30;//seconds between changes
 var ssize = 40;
 
-var format = d3.format('02d')
+var format = d3.format('2d')
 
 
 var svg = d3.select("svg"),

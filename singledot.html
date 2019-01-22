@@ -5,6 +5,8 @@
 div,text{font-family: 'Montserrat', sans-serif;
 color:white;}
 svg{background-fill: 'whitesmoke'}
+path,annotation{fill:'none';
+stroke:'none'}
  </style>
 
 <svg id='svg'></svg>
@@ -361,7 +363,7 @@ if (exists.indexOf(n1)> -1 & exists.indexOf(n2)>-1){
       radius: parseFloat(c.get(n1).getAttribute('r')) ,
       radiusPadding: 0
     },
-    color:window.groupcolours[graph.get(n2).feature],
+    color:window.groupcolours[graph.get(n2).feature]||'none',
     ccolor:window.groupcolours[graph.get(n1).feature],
 
   };
@@ -409,6 +411,8 @@ d3.select('svg').append("g").attr("class", "annotation-encircle").call(makeAnnot
 [...document.querySelectorAll('g.annotation.callout.circle')]
 .map((d,i)=>{d.setAttribute('stroke-width',c.get(annotations[i].id).getAttribute('r')/1.6);
 });
+
+
 [...document.querySelectorAll('g.annotation.callout.circle g.annotation-subject path.subject')]
 .map((d,i)=>{d.setAttribute('stroke', annotations[i].ccolor);
 });
@@ -437,7 +441,7 @@ svg
     .attr("dy",".35em")
     .style("text-anchor", "middle")
     .style('font-size',t.getAttribute('r')/2.2+'px')
-    .text('>'+ d3.format('02d')(nds.get(t.getAttribute('id')).label.split('<=')[1]));
+    .text('>'+ d3.format('2d')(nds.get(t.getAttribute('id')).label.split('<=')[1]));
 
 }).attr('fill','whitesmoke')
 

@@ -15,4 +15,5 @@ window.groupcolours ={
   "WOA_Phosphate":"#e41a1c",
   "Phosphate":"#e41a1c",
   "SWrad":"#999999",
+  undefined:"none"
 }
