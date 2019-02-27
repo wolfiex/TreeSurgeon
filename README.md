@@ -25,4 +25,4 @@ python montage.py
 
 
 ## Example Output for Composite Graph
-![composite](./readmeimage.png =100x200){ width: 200px; }
+![composite](./readmeimage.png =100x200)
