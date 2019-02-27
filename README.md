@@ -1,3 +1,17 @@
+# Written for usage in:
+
+## "A machine learning based global sea-surface iodide distribution"
+
+#### Authors:
+Tomás Sherwen1,2, Rosie J. Chance2, Liselotte Tinel2, Daniel Ellis2, Mat J. Evans1,2, and Lucy J. Carpenter2
+
+
+1National Centre for Atmospheric Science, University of York, York, YO10 5DD, UK 
+
+2Wolfson Atmospheric Chemistry Laboratories, University of York, York, YO10 5DD, UK
+
+
+
 # Running
 Place files in csv folder.
 
@@ -25,5 +39,6 @@ python montage.py
 
 
 ## Example Output for Composite Graph
-![composite](./readmeimage.png)
-{:.some-css-class style="width: 200px"}
+<img src="./readmeimage.png" width="400" />
+
+
