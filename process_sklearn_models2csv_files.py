@@ -1,94 +1,115 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
+Function to process sklearn saved RandomForestRegressors to csv files,
+which can then be read in by forrester's nope.js plotter functions.
 
-Function to process sklearn saved RandomForestRegressors to csv files, 
-which can then be read in by forrester's nope.js plotter functions.  
-
-NOTE: update needed to generalise to external inputs. 
+NOTE:
+ - The function get_RFR_dictionary is just pseudo code. It will need to updated by the user to provide a dictionary of values/models etc required by the other models provided here. The dictionary values required are stated in get_RFR_dictionary
 
 """
+from __future__ import print_function
+import os
+import glob
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 def main():
-    """ 
+    """
     Driver to make summary csv files from sklearn RandomForestRegressor models
     """
 
-    # Get dictionaries of feature variables, model names etc... 
+    # Get dictionaries of feature variables, model names etc...
     RFR_dict = get_RFR_dictionary()
-    
+
     # Extract the pickled sklearn RandomForestRegressor models to .dot files
     extract_trees_to_dot_files()
 
     # Analyse the nodes in the models
     # (This calls the main worker function "get_decision_point_and_values_for_tree")
-    analyse_nodes_in_models()
-    
+    analyse_nodes_in_models( RFR_dict=RFR_dict )
+
 
 def get_RFR_dictionary():
-    """ Read in RandomForestRegressor variables """    
-    # Get model names and models 
-    # Get testing features
-    # ...
+    """
+    Read in RandomForestRegressor variables
+
+    Returns
+    -------
+    (dict)
+
+    Notes
+    -------
+     - This is just pseudo code listing the vaiables that are required to be in the
+     dictionary
+    """
+    # Setup a dictionary object
+    RFR_dict = {}
+    # Add model names and models
+    # RFR_dict['models_dict'] = {'name of model': model, ...}
+    # Add testing features for models
+    # RFR_dict['testing_features_dict'] = {'name of model': testing features of model, ...}
+    # Add list of the topmodels (models to analyse)
+    # RFR_dict['topmodels'] = [...]
 
     return RFR_dict
 
 
-def extract_trees_to_dot_files(folder=None,
-        extr_str='FINAL_DATA_tree_X_STRAT_JUST_TEMP_K_GEBCO_SALINTY'):
-    """ Extract model trees to .dot files to be plotted in d3 """
+def extract_trees_to_dot_files(folder=None, plot_tree=False,
+        Name_of_model='Example_model', testing_features=None, max_depth=None):
+    """
+    Extract model trees to .dot files to be plotted in d3
+
+    Parameters
+    -------
+    folder (str): the folder that the model output *.pkl files are
+    testing_features (list): list of the testing features in a given model
+    Name_of_model (str): Name of model in filename, used in read and saving
+    plot_tree (boolean): plot up the extracted tree
+    max_depth (int): depth up to which to extract
+
+    Returns
+    -------
+    (None)
+    """
     from sklearn.externals import joblib
     from sklearn import tree
     import os
     # Get the location of the saved model
-    if isinstance(folder, type(None)):
-        folder = get_file_locations('iodide_data')+'/models/'
     model_filename = "my_model_{}.pkl".format( extr_str )
-    # Mas depth to use?
-    max_depth=None
-#    max_depth=4 # What was original set in email to Dan
-    # Provide feature names?
-    testing_features = None
-    if (extr_str == 'FINAL_DATA_tree_X_STRAT_JUST_TEMP_K_GEBCO_SALINTY'):
-        testing_features = [
-    #        u'Longitude',
-    #       'Latitude',
-           'WOA_TEMP_K',
-           'WOA_Salinity',
-    #       'WOA_Nitrate',
-           'Depth_GEBCO',
-    #       'SeaWIFs_ChlrA',
-    #     u'month',
-            ]
-    # open as rf
+    # open as random forst object ("rf")
     rf = joblib.load(folder+model_filename)
-    # save all trees to disk
+    # loop trees in forest and save to disk
     for n, rf_unit in enumerate( rf ):
-        out_file='tree_{}_{}.dot'.format( extr_str, n )
+        out_file='tree_{}_{}.dot'.format( Name_of_model, n )
         tree.export_graphviz(rf_unit, out_file=out_file, max_depth=max_depth,
             feature_names=testing_features )
     # Also plot up?
-#    os.system('dot -Tpng tree.dot -o tree.png')
+    if plot_tree:
+        os.system('dot -Tpng tree.dot -o tree.png')
 
 
 def analyse_nodes_in_models( RFR_dict=None, depth2investigate=5 ):
-    """ Analyse the nodes in a RFR model """
+    """
+    Analyse the nodes in a RFR model
+
+    Parameters
+    -------
+    RFR_dict (dictionary): diction of models, model names, features etc
+    (see get_RFR_dictionary function)
+    depth2investigate (int): depth up to which to build statistics on
+
+    Returns
+    -------
+    (None)
+    """
     import glob
-    # ---
-    # get dictionary of data if not provided as arguement
-    if isinstance( RFR_dict, type(None) ):
-        RFR_dict = build_or_get_current_models()
     # models to analyse?
-    models2compare = [
-#    'RFR(TEMP+DEPTH+SAL+NO3+DOC)', 'RFR(TEMP+DEPTH+SAL+NO3)',
-#    'RFR(TEMP+DEPTH+SAL)', 'RFR(TEMP+SAL+Prod)',
-#    'RFR(TEMP+SAL+NO3)',
-#    'RFR(TEMP+DEPTH+SAL)',
-    ]
-    topmodels = get_top_models( RFR_dict=RFR_dict, NO_DERIVED=True, n=10 )
+    models2compare = [ ]
+    topmodels = RFR_dict['topmodels']
     models2compare = topmodels
-    # get strings to update variable names to
-    name_dict = convert_fullname_to_shortname( rtn_dict=True )
     # Loop and analyse models2compare
     for model_name in models2compare:
         print( model_name )
@@ -103,11 +124,6 @@ def analyse_nodes_in_models( RFR_dict=None, depth2investigate=5 ):
         csv_files = glob.glob(filestr)
         for csv_file in csv_files:
             df = pd.read_csv( csv_file )
-            # Update the names for the variables
-            feature_columns = [i for i in df.columns if 'feature' in i]
-            for col in feature_columns:
-                for key, value in name_dict.items():
-                    df[col] = df[col].str.replace( key, value )
             # save the .csv
             df.to_csv( csv_file )
 
@@ -137,9 +153,6 @@ def get_decision_point_and_values_for_tree( depth2investigate=3,
     from sklearn.externals import joblib
     from sklearn import tree
     import os
-    # get dictionary of data if not provided as arguement
-    if isinstance( RFR_dict, type(None) ):
-        RFR_dict = build_or_get_current_models()
     # extra variables needed from RFR_dict
     models_dict = RFR_dict['models_dict']
     testing_features_dict = RFR_dict['testing_features_dict']
@@ -267,7 +280,7 @@ def get_decision_point_and_values_for_tree( depth2investigate=3,
         node_feats = list(df_tmp.index)
         s_samples_mean = pd.Series()
         s_samples_median = pd.Series()
-        # Now loop and get values fro features
+        # Now loop and get values for features
         for feat_ in node_feats:
             # - Get threshold value for node + stats on this
             thres_val4node = df[THRESvar].loc[ df[FEATvar]==feat_]
@@ -345,8 +358,8 @@ def get_decision_point_and_values_for_tree( depth2investigate=3,
     dfn.sort_values(by=['node #'], ascending=True, inplace=True)
     filename = filename_str.format( model_name, depth2investigate, '', 'csv')
     dfn.to_csv( filename )
-    
-    
+
+
 if __name__ == "__main__":
     main()
 
