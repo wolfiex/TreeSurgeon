@@ -22,3 +22,7 @@ sudo npm install -g --save electron --unsafe-perm=true --allow-root
 # Montage setup
 python montage.py
 # Thesis
+
+
+#Example Output for Composite Graph
+![composite](./readmeimage.png)
