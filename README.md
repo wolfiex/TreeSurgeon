@@ -1,4 +1,4 @@
-# DOI: <img data-toggle="modal" data-target="[data-modal='10.5281/zenodo.2579240']" src="https://zenodo.org/badge/112364748.svg" alt="10.5281/zenodo.2579240">
+# DOI: <a href='https://zenodo.org/record/2579240'> <img data-toggle="modal" data-target="[data-modal='https://zenodo.org/record/2579240']" src="https://zenodo.org/badge/112364748.svg" alt="https://zenodo.org/record/2579240"></a>
 
 
 
