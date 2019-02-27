@@ -27,10 +27,13 @@ see colours.json file
 This is in the pdf folder.
 
 # Install
+```
 conda install nodejs
 npm install
 sudo npm install -g --save electron --unsafe-perm=true --allow-root
-- for merge - have imagemagick installed
+```
+
+- for merge - have imagemagick and ghostscript installed
 
 
 # Montage setup
