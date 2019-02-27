@@ -24,5 +24,5 @@ python montage.py
 # Thesis
 
 
-#Example Output for Composite Graph
-![composite](./readmeimage.png)
+## Example Output for Composite Graph
+![composite](./readmeimage.png =100x200){ width: 200px; }
