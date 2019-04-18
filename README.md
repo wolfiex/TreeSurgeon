@@ -8,14 +8,14 @@
 ## "A machine learning based global sea-surface iodide distribution"
 
 #### Authors:
-Tomás Sherwen1,2, Rosie J. Chance2, Liselotte Tinel2, Daniel Ellis2, Mat J. Evans1,2, and Lucy J. Carpenter2
+Tomás Sherwen (1,2), Rosie J. Chance (2), Liselotte Tinel (2), Daniel Ellis (2), Mat J. Evans (1,2), and Lucy J. Carpenter (2)
 
 
-1National Centre for Atmospheric Science, University of York, York, YO10 5DD, UK 
+(1) National Centre for Atmospheric Science, University of York, York, YO10 5DD, UK 
+(2) Wolfson Atmospheric Chemistry Laboratories, University of York, York, YO10 5DD, UK
 
-2Wolfson Atmospheric Chemistry Laboratories, University of York, York, YO10 5DD, UK
-
-
+#### Citation:
+Sherwen, T., Chance, R. J., Tinel, L., Ellis, D., Evans, M. J., and Carpenter, L. J.: A machine learning based global sea-surface iodide distribution, Earth Syst. Sci. Data Discuss., https://doi.org/10.5194/essd-2019-40, in review, 2019.
 
 # Running
 Place files in csv folder.
