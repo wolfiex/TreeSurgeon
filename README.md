@@ -56,3 +56,8 @@ This package was initially written for use with the [`sparse2spatial`](https://g
 ## Reference
 Sherwen, T., Chance, R. J., Tinel, L., Ellis, D., Evans, M. J., and Carpenter, L. J.: A machine learning based global sea-surface iodide distribution, Earth Syst. Sci. Data Discuss., https://doi.org/10.5194/essd-2019-40, in review, 2019.
 
+# License
+
+Copyright (c) 2019 [Daniel Ellis](https://github.com/wolfiex) and [Tomas Sherwen](https://github.com/tsherwen)
+
+This work is licensed under a permissive MIT License.
