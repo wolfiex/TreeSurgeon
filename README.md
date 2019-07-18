@@ -2,8 +2,8 @@
 
 # TreeSurgeon - Visualisation of Radom Forest Regressor models
 
-**TreeSurgeon** contains routines to visualise Radom Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RadomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input .csv files required by **TreeSurgeon** using the
-extract_models4TreeSurgeon.py script in the
+**TreeSurgeon** contains routines to visualise Radom Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RadomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input `.csv` files required by **TreeSurgeon** using the
+`extract_models4TreeSurgeon.py` script in the
 [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module.
 
 
