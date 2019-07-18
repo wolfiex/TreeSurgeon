@@ -48,7 +48,7 @@ python montage.py
 
 # Usage
 
-This package was initially written for use with the [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) package for work to predict sea-surface concentrations [[*Sherwen et al.* 2019]([https://doi.org/10.5194/essd-2019-40)]. However it can be used for any Radom Forest Regressor models made by [`sklearn`](https://scikit-learn.org/) and post-processed to **TreeSurgeon** input by [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial)
+This package was initially written for use with the [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) package for work to predict sea-surface concentrations [[*Sherwen et al.* 2019](https://doi.org/10.5194/essd-2019-40)]. However it can be used for any Radom Forest Regressor models made by [`sklearn`](https://scikit-learn.org/) and post-processed to **TreeSurgeon** input by [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial)
 
 
 ## Citation(s)
