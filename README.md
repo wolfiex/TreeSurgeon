@@ -2,7 +2,7 @@
 
 # TreeSurgeon - Visualisation of Radom Forest Regressor models
 
-*TreeSurgeon* contains routines to visualise Radom Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RadomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input .csv files required by *TreeSurgeon* using the
+**TreeSurgeon** contains routines to visualise Radom Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RadomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input .csv files required by **TreeSurgeon** using the
 extract_models4TreeSurgeon.py script in the
 [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module.
 
@@ -11,7 +11,7 @@ extract_models4TreeSurgeon.py script in the
 
 ## Running
 
-- Process the saved Radom Forest Regressor models `*.pkl` files into the `.csv` that *TreeSurgeon* expects using the script in [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module. You will need to update some lines in the script as described there.
+- Process the saved Radom Forest Regressor models `*.pkl` files into the `.csv` that **TreeSurgeon*** expects using the script in [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module. You will need to update some lines in the script as described there.
 
 `python extract_models4TreeSurgeon.py`
 
@@ -48,7 +48,7 @@ python montage.py
 
 # Usage
 
-This package was initially written for use with the [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) package for work to predict sea-surface concentrations ([Sherwen et al. 2019])[https://doi.org/10.5194/essd-2019-40]. However it can be used for any Radom Forest Regressor models made by [`sklearn`](https://scikit-learn.org/) and post-processed to *TreeSurgeon* input by [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial)
+This package was initially written for use with the [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) package for work to predict sea-surface concentrations [[*Sherwen et al.* 2019]([https://doi.org/10.5194/essd-2019-40)]. However it can be used for any Radom Forest Regressor models made by [`sklearn`](https://scikit-learn.org/) and post-processed to **TreeSurgeon** input by [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial)
 
 
 ## Citation(s)
