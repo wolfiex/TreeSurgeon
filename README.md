@@ -1,37 +1,39 @@
-# DOI: <a href='https://zenodo.org/record/2579240'> <img data-toggle="modal" data-target="[data-modal='https://zenodo.org/record/2579240']" src="https://zenodo.org/badge/112364748.svg" alt="https://zenodo.org/record/2579240"></a>
+<a href='https://zenodo.org/record/2579240'> <img data-toggle="modal" data-target="[data-modal='https://zenodo.org/record/2579240']" src="https://zenodo.org/badge/112364748.svg" alt="https://zenodo.org/record/2579240"></a>
+
+# TreeSurgeon - Visualisation of Radom Forest Regressor models
+
+**TreeSurgeon** contains routines to visualise Radom Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RadomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input `.csv` files required by **TreeSurgeon** using the
+`extract_models4TreeSurgeon.py` script in the
+[`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module.
 
 
+# Quick Start
 
-# Written for usage in:
+## Running
 
+- Process the saved Radom Forest Regressor models `*.pkl` files into the `.csv` that **TreeSurgeon*** expects using the script in [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module. You will need to update some lines in the script as described there.
 
-## "A machine learning based global sea-surface iodide distribution"
+`python extract_models4TreeSurgeon.py`
 
-#### Authors:
-Tomás Sherwen (1,2), Rosie J. Chance (2), Liselotte Tinel (2), Daniel Ellis (2), Mat J. Evans (1,2), and Lucy J. Carpenter (2)
+- Place files in the [`csv`](https://github.com/wolfiex/TreeSurgeon/tree/master/csv) folder.
 
+for composite files:
 
-(1) National Centre for Atmospheric Science, University of York, York, YO10 5DD, UK 
-(2) Wolfson Atmospheric Chemistry Laboratories, University of York, York, YO10 5DD, UK
+`python start.py $NCPUS`
 
-#### Citation:
-Sherwen, T., Chance, R. J., Tinel, L., Ellis, D., Evans, M. J., and Carpenter, L. J.: A machine learning based global sea-surface iodide distribution, Earth Syst. Sci. Data Discuss., https://doi.org/10.5194/essd-2019-40, in review, 2019.
+or for single dot files
 
-# Running
-Place files in csv folder.
+`python start.py $NCPUS 1 `
 
-`python start.py $NCPUS` -for composite files
-`python start.py $NCPUS 1 ` -for single dot files
+- This then runs in the background (no screen). To change edit `show` option in main.js
 
-This then runs in the background (no screen). To change edit 'show' option in main.js
+## Set colours
+The colours are set in the `colours.json` file.
 
-# Set colours
-see colours.json file
+## Output
+This is in the [`pdfs`](https://github.com/wolfiex/TreeSurgeon/tree/master/pdfs) folder.
 
-# Output
-This is in the pdf folder.
-
-# Install
+## Install
 ```
 conda install nodejs
 npm install
@@ -40,13 +42,17 @@ sudo npm install -g --save electron --unsafe-perm=true --allow-root
 
 - for merge - have imagemagick and ghostscript installed
 
-
-# Montage setup
+## Montage setup
 python montage.py
-
-
 
 ## Example Output for Composite Graph
 <img src="./readmeimage.png" width="400" />
 
+# Usage
+
+This package was initially written for use with the [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) package for work to predict sea-surface concentrations [[*Sherwen et al.* 2019](https://doi.org/10.5194/essd-2019-40)]. However it can be used for any Radom Forest Regressor models made by [`sklearn`](https://scikit-learn.org/) and post-processed to **TreeSurgeon** input by [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial)
+
+
+## Reference
+Sherwen, T., Chance, R. J., Tinel, L., Ellis, D., Evans, M. J., and Carpenter, L. J.: A machine learning based global sea-surface iodide distribution, Earth Syst. Sci. Data Discuss., https://doi.org/10.5194/essd-2019-40, in review, 2019.
 
