@@ -18,9 +18,11 @@
 - Place files in the [`csv`](https://github.com/wolfiex/TreeSurgeon/tree/master/csv) folder.
 
 for composite files:
+
 `python start.py $NCPUS`
 
 or for single dot files
+
 `python start.py $NCPUS 1 `
 
 - This then runs in the background (no screen). To change edit `show` option in main.js
@@ -51,6 +53,6 @@ python montage.py
 This package was initially written for use with the [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) package for work to predict sea-surface concentrations [[*Sherwen et al.* 2019](https://doi.org/10.5194/essd-2019-40)]. However it can be used for any Radom Forest Regressor models made by [`sklearn`](https://scikit-learn.org/) and post-processed to **TreeSurgeon** input by [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial)
 
 
-## Citation(s)
+## Reference
 Sherwen, T., Chance, R. J., Tinel, L., Ellis, D., Evans, M. J., and Carpenter, L. J.: A machine learning based global sea-surface iodide distribution, Earth Syst. Sci. Data Discuss., https://doi.org/10.5194/essd-2019-40, in review, 2019.
 
