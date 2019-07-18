@@ -1,8 +1,8 @@
 <a href='https://zenodo.org/record/2579240'> <img data-toggle="modal" data-target="[data-modal='https://zenodo.org/record/2579240']" src="https://zenodo.org/badge/112364748.svg" alt="https://zenodo.org/record/2579240"></a>
 
-# TreeSurgeon - Visualisation of Radom Forest Regressor models
+# TreeSurgeon - Visualisation of Random Forest Regressor models
 
-**TreeSurgeon** contains routines to visualise Radom Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RadomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input `.csv` files required by **TreeSurgeon** using the
+**TreeSurgeon** contains routines to visualise Random Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RandomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input `.csv` files required by **TreeSurgeon** using the
 `extract_models4TreeSurgeon.py` script in the
 [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module.
 
@@ -11,7 +11,7 @@
 
 ## Running
 
-- Process the saved Radom Forest Regressor models `*.pkl` files into the `.csv` that **TreeSurgeon*** expects using the script in [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module. You will need to update some lines in the script as described there.
+- Process the saved Random Forest Regressor models `*.pkl` files into the `.csv` that **TreeSurgeon*** expects using the script in [`sparse2spatial`](https://github.com/tsherwen/sparse2spatial) module. You will need to update some lines in the script as described there.
 
 `python extract_models4TreeSurgeon.py`
 
