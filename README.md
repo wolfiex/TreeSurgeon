@@ -1,6 +1,6 @@
-<a href='https://zenodo.org/record/2579240'> <img data-toggle="modal" data-target="[data-modal='https://zenodo.org/record/2579240']" src="https://zenodo.org/badge/112364748.svg" alt="https://zenodo.org/record/2579240"></a>
 
-# TreeSurgeon - Visualisation of Random Forest Regressor models
+# TreeSurgeon: Visualisation of Random Forest Regressors
+<a href="https://doi.org/10.5281/zenodo.3346817"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3346817.svg" alt="DOI"></a>
 
 **TreeSurgeon** contains routines to visualise Random Forest Regressor models. The module takes models output files made by [`sklearn`](https://scikit-learn.org/)'s RandomForestRegressor implementation of the random forest regressor algorithm. The raw output files from [`sklearn`](https://scikit-learn.org/) models (`*pkl`) first needs to be converted to the input `.csv` files required by **TreeSurgeon** using the
 `extract_models4TreeSurgeon.py` script in the
@@ -40,7 +40,7 @@ npm install
 sudo npm install -g --save electron --unsafe-perm=true --allow-root
 ```
 
-- for merge - have imagemagick and ghostscript installed
+- for merge imagemagick and ghostscript need to be installed
 
 ## Montage setup
 python montage.py
