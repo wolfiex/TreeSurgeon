@@ -5,7 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "d3": "^4.13.0",
-    "electron": "^2.0.9",
+    "electron": "^9.1.0",
     "globule": "^1.2.1",
     "pdfkit": "^0.8.3",
     "svg-to-pdfkit": "^0.1.7"
